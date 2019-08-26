@@ -1,16 +1,18 @@
-const path = require(`path`)
+const path = require('path')
+const _ = require('lodash')
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
-exports.createPages = async ({ graphql, actions }) => {
+exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
-  const result = await graphql(
+  const tagTemplate = path.resolve(`./src/templates/tags.js`)
+  return graphql(
     `
       {
         allMarkdownRemark(
           sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
+          limit: 2000
         ) {
           edges {
             node {
@@ -19,46 +21,84 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                tags
               }
             }
           }
         }
       }
     `
-  )
+  ).then(result => {
+    if (result.errors) {
+      throw result.errors
+    }
 
-  if (result.errors) {
-    throw result.errors
-  }
+    const posts = result.data.allMarkdownRemark.edges
 
-  // Create blog posts pages.
-  const posts = result.data.allMarkdownRemark.edges
+    posts.forEach((post, index, node) => {
+      const previous = index === posts.length - 1 ? null : posts[index + 1].node
+      const next = index === 0 ? null : posts[index - 1].node
 
-  posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+      createPage({
+        path: post.node.fields.slug,
+        component: blogPost,
+        context: {
+          slug: post.node.fields.slug,
+          previous,
+          next,
+        },
+      })
+    }) 
 
-    createPage({
-      path: post.node.fields.slug,
-      component: blogPost,
-      context: {
-        slug: post.node.fields.slug,
-        previous,
-        next,
-      },
+    // Tag pages:
+    let tags = []
+    // Iterate through each post, putting all found tags into `tags`
+    _.each(posts, edge => {
+      if (_.get(edge, "node.frontmatter.tags")) {
+        tags = tags.concat(edge.node.frontmatter.tags)
+      }
     })
+    // Eliminate duplicate tags
+    tags = _.uniq(tags)
+
+    // Make tag pages
+    tags.forEach(tag => {
+      createPage({
+        path: `/tags/${_.kebabCase(tag)}/`,
+        component: tagTemplate,
+        context: {
+          tag,
+        },
+      })
+    })
+    return null
   })
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
-
   if (node.internal.type === `MarkdownRemark`) {
     const value = createFilePath({ node, getNode })
     createNodeField({
       name: `slug`,
       node,
       value,
+    })
+  }
+
+
+  if (node && node.internal && node.internal.type === 'MarkdownRemark') {
+
+    // 親のFileNodeを取得して
+    const parent = getNode(node.parent)
+
+    // gatsby-config.jsで設定したFileNodeのsourceInstanceNameを
+    // MarkdownRemarkのフィールドに引き継ぐ
+    // 名前はMarkdownRemarkの他プロパティとかぶらないようにcollectionとしている
+    createNodeField({
+      node,
+      name: `collection`,
+      value: parent.sourceInstanceName,
     })
   }
 }

@@ -1,0 +1,38 @@
+.header{
+	width: 100%;
+	display: flex;
+  flex-direction: column;
+  /*justify-content: center; 要素中央寄せ（縦）*/
+  align-items: center;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+  min-height: 65vh;
+  position: relative;
+  font-family: Montserrats,ans-serif;
+  background-image: url("https://i.pinimg.com/originals/f6/70/98/f6709848f3ceeb362b5c9aebed04506a.jpg"); 
+}
+
+/*// .main{
+//     border-bottom: 1px solid #ebf2f6;
+//     border-radius: 4px;
+//     box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+//     padding: .75rem 1.75rem;
+//     background: #fff;
+//     max-width: 100%;
+// }*/
+
+
+.navbar{
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 100px;
+  text-align: right;
+}
+
+.footer{
+    text-align: center;
+    padding: 10px;
+    margin: auto;
+}

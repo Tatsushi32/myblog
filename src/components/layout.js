@@ -1,72 +1,67 @@
 import React from "react"
-import { Link } from "gatsby"
-
+// import { Link } from "gatsby"
+import Bio from "../components/bio"
+// import Logo from "../components/image/image"
 import { rhythm, scale } from "../utils/typography"
+
+import Styles from "./layout.module.scss" //css追加
+
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
+import Navbar from "./navbar"
 
 class Layout extends React.Component {
   render() {
-    const { location, title, children } = this.props
-    const rootPath = `${__PATH_PREFIX__}/`
-    let header
-
-    if (location.pathname === rootPath) {
-      header = (
-        <h1
-          style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          style={{
-            fontFamily: `Montserrat, sans-serif`,
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
-        </h3>
-      )
-    }
+    const { title, children } = this.props
+    
     return (
-      <div
-        style={{
+      <div>
+        <header className={Styles.header}>
+            <div className={Styles.navbar}>
+              <Navbar />
+            </div>
+            <div>
+              <div>
+                <h1
+                  style={{
+                    ...scale(1.5),
+                    marginBottom: rhythm(1.5),
+                    marginTop: 0,
+                  }}
+                >
+                <p style={{
+                  fontSize: `1em`,
+                  marginTop: `1.5em`,
+                  fontFamily: `Montserrats,ans-serif`,
+                }}>
+                  {title}
+                </p>
+                </h1>
+                <h5 style={{
+                  fontWeight: `400`,
+                  fontSize: `16px`,
+                  lineHeight: `1.3`,
+                }}>
+                <Bio/>
+                </h5> 
+              </div>
+            </div>
+        </header>
+        <div>
+        <main style={{
           marginLeft: `auto`,
           marginRight: `auto`,
-          maxWidth: rhythm(24),
+          maxWidth: `75rem`,
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-        }}
-      >
-        <header>{header}</header>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        }}>{children}</main>
+        </div>
+        <div>
+        <footer className={Styles.footer}>
+        <Navbar />
+          © {new Date().getFullYear()} Tatsushi Kakeya
         </footer>
+        </div>
       </div>
     )
   }

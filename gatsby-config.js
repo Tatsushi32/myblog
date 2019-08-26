@@ -1,19 +1,27 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: `Kyle Mathews`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    title: `Tatsushi's Blog`,
+    author: `Tatsushi Kakeya`,
+    description: `日々の作業を綴っていきます。`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
     social: {
-      twitter: `kylemathews`,
+      facebook: `Tatsushi Kakeya`,
     },
   },
   plugins: [
+    `gatsby-plugin-sass`,  //css追加
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
+        path: `${__dirname}/content/blog/dialy`,
+        name: `posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/blog/youtube`,
+        name: `youtube`,
       },
     },
     {
@@ -24,9 +32,23 @@ module.exports = {
       },
     },
     {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `img`,
+      path: `${__dirname}/src/images/`
+    }
+    },
+    {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          {
+          resolve: "gatsby-remark-embed-youtube",
+          options: {　// 固定サイズにする場合に指定
+            width: 800,
+            height: 400
+            },
+          },
           {
             resolve: `gatsby-remark-images`,
             options: {
@@ -63,7 +85,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `src/images/gatsby-icon.png`,
       },
     },
     `gatsby-plugin-offline`,

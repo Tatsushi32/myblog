@@ -11,6 +11,15 @@ import Image from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
+import Styles from "../pages/index.module.scss" //CSS追加
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'; //fontawesome 
+
+
 const Bio = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
@@ -24,20 +33,17 @@ const Bio = () => {
       site {
         siteMetadata {
           author
-          social {
-            twitter
-          }
         }
       }
     }
   `)
 
-  const { author, social } = data.site.siteMetadata
+  const { author } = data.site.siteMetadata
   return (
     <div
       style={{
         display: `flex`,
-        marginBottom: rhythm(2.5),
+        marginBottom: rhythm(2),
       }}
     >
       <Image
@@ -53,14 +59,22 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
-      <p>
-        Written by <strong>{author}</strong> who lives and works in San
-        Francisco building useful things.
-        {` `}
-        <a href={`https://twitter.com/${social.twitter}`}>
-          You should follow him on Twitter
-        </a>
-      </p>
+      <div>
+        <div>
+          <p className={Styles.bio}>
+            Tatsushi's dialy powered by Gatsby
+            {` `}
+          </p>
+        </div>
+        <div>
+          <ul>
+            <a style={{color:`black`}} className={Styles.fontawesome} target="_blank" rel="noopener noreferrer" href={`https://github.com/Tatsushi-Kakeya`}><FontAwesomeIcon icon={faGithubSquare} /></a>
+            <a style={{color:`navy`}} className={Styles.fontawesome} target="_blank" rel="noopener noreferrer" href={`https://www.facebook.com/tatsushi.kakeya`}><FontAwesomeIcon icon={faFacebookSquare} /></a>
+            <a style={{color:`royalblue`}} className={Styles.fontawesome} target="_blank" rel="noopener noreferrer" href={`https://twitter.com/Tkake_32`}><FontAwesomeIcon icon={faTwitterSquare} /></a>
+            <a style={{color:`mediumvioletred`}} className={Styles.fontawesome} target="_blank" rel="noopener noreferrer" href={`https://www.instagram.com/tatsushi32/`}><FontAwesomeIcon icon={faInstagram} /></a>
+          </ul>  
+        </div>
+      </div>
     </div>
   )
 }
