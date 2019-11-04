@@ -26,11 +26,9 @@ a:hover {
 }
 
 .blog{
-    padding: 2.5% 0;
-    display: flex;
-	flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-around;
 }
 
 article {
