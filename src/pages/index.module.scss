@@ -33,21 +33,25 @@ a:hover {
     justify-content: space-between;
 }
 
-.article{
+article {
 	color: black;
 	border-bottom: 1px solid #ebf2f6;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
-    padding: .75rem 1.75rem;
-    background: #fff;
-    max-width: 21rem;
-    min-height: 23rem;
-    margin-bottom: 30px;
-    
+	border-radius: 4px;
+	box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px rgba(63,63,68,.1), 0 1px 2px rgba(0,0,0,.05);
+	padding: .75rem 1.75rem;
+	background: #fff;
+	max-width: 21rem;
+	min-height: 23rem;
+	margin-bottom: 30px;
+	margin-right: 3.1rem;   
 }
 
-.article:hover{
+article:hover {
 	opacity: 0.8;
+}
+
+.link {
+	color: black;
 }
 
 .img{
