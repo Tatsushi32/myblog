@@ -61,7 +61,7 @@ const Navbar = class extends React.Component {
                 Home
               </Link>
               <Link className={Styles.navbarItem} to="/dialy">
-                Dialy
+                Memo
               </Link>
               <Link className={Styles.navbarItem} to="/movie">
                 Youtube
